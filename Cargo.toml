@@ -2,7 +2,11 @@
 name = "labrador"
 version = "0.0.0"
 edition = "2021"
+license = "MIT OR Apache-2.0"
 
 [lib]
 
 [dependencies]
+rand = "0.8.5"
+ring-math = "0.0.4"
+scalarff = "0.4.3"
