@@ -8,5 +8,8 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 rand = "0.8.5"
-ring-math = "0.0.4"
-scalarff = "0.4.3"
+ring-math = "0.1.0"
+scalarff = "0.5.1"
+
+#ring-math = { path = "../ashlang/ring-math" }
+#scalarff = { path = "../scalarff" }

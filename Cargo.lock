@@ -816,9 +816,9 @@ dependencies = [
 
 [[package]]
 name = "ring-math"
-version = "0.0.4"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd2bb5ed08ac42ab946b7ccb72a8c054ce055d286022e8d88788da3e8c3322d1"
+checksum = "a714f2e4c98b496b65ff9de23fdc2e132195a7eb66b8c7633e89248bd61de1b5"
 dependencies = [
  "anyhow",
  "rand",
@@ -842,9 +842,9 @@ checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
 
 [[package]]
 name = "scalarff"
-version = "0.4.3"
+version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dfef4665624906679b3a8791efb36e3c956050297b7996762b53cf0faf1f5acc"
+checksum = "087fe17cda5f63e91dab4c22fcd6740ed92ede6752ee229f7769cbd55a33a0df"
 dependencies = [
  "ark-bn254",
  "ark-ff",
