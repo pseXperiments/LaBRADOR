@@ -5,7 +5,7 @@ WIP implementation of [LaBRADOR](https://eprint.iacr.org/2022/1341.pdf).
 ## Laundry list
 
 - [ ] implement dot product constraints
-- [ ] write an adapter from r1cs to dot product constraints
+- [ ] write an adapter from [r1cs](https://github.com/chancehudson/ashlang/tree/main/ashlang/src/r1cs#r1cs-compile-target) to dot product constraints
 
 ## License
 
