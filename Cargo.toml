@@ -10,6 +10,9 @@ license = "MIT OR Apache-2.0"
 rand = "0.8.5"
 ring-math = "0.1.0"
 scalarff = "0.5.1"
+ashlang = { version = "0.1.2", default-features = false }
+#ashlang = { path = "../ashlang/ashlang", default-features = false }
+anyhow = "1.0.89"
 
 #ring-math = { path = "../ashlang/ring-math" }
 #scalarff = { path = "../scalarff" }

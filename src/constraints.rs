@@ -1,31 +1,38 @@
-use ring_math::polynomial_ring;
-use ring_math::Polynomial;
-use ring_math::PolynomialRingElement;
-use scalarff::scalar_ring;
-use scalarff::FieldElement;
-
-// creates a scalar ring struct DilithiumRingElement
-scalar_ring!(DilithiumRingElement, 8380417, "dilithium_23_bit");
-
-// creates a polynomial ring struct
-polynomial_ring!(
-    DilithiumPolynomialRingElement,
-    DilithiumRingElement,
-    {
-        // creating the ring modulus polynomial
-        // here we use x^64 + 1
-        let mut p = Polynomial::identity();
-        p.term(&DilithiumRingElement::one(), 64);
-        p
-    },
-    "dilithium_x64+1"
-);
-
 #[cfg(test)]
 mod test {
+    use ashlang::r1cs::parser::R1csParser;
+    use ashlang::rings::DilithiumPolynomialRingElement;
+    use ashlang::rings::DilithiumRingElement;
     use ring_math::Matrix2D;
+    use ring_math::PolynomialRingElement;
+    use scalarff::FieldElement;
 
-    use super::*;
+    #[test]
+    fn transform_r1cs() -> anyhow::Result<()> {
+        let ar1cs_src = std::fs::read_to_string("./test-vectors/example.ar1cs")?;
+        let r1cs_parser: R1csParser<DilithiumPolynomialRingElement> = R1csParser::new(&ar1cs_src)?;
+        let _constraints = r1cs_parser.constraints;
+
+        // TODO: transform constraints into dot product form
+
+        // generate a witness just for fun 🤩
+        let input = 55;
+        let witness = ashlang::r1cs::witness::build(
+            &ar1cs_src,
+            vec![DilithiumPolynomialRingElement::from(input)],
+        )?;
+        println!("Calculated witness for input: {input}");
+        println!(
+            "{}",
+            witness
+                .variables
+                .iter()
+                .map(|v| v.to_string())
+                .collect::<Vec<_>>()
+                .join("\n")
+        );
+        Ok(())
+    }
 
     #[test]
     fn conj_automorphism() {
