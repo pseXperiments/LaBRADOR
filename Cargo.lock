@@ -1073,9 +1073,9 @@ dependencies = [
 
 [[package]]
 name = "ring-math"
-version = "0.1.0"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a714f2e4c98b496b65ff9de23fdc2e132195a7eb66b8c7633e89248bd61de1b5"
+checksum = "b9ebb260975ce57fb0779b9b64811d9e32139ec6098b69a153cc9ed5659ca905"
 dependencies = [
  "anyhow",
  "rand",
