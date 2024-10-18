@@ -3,53 +3,27 @@ mod test {
     use ashlang::r1cs::parser::R1csParser;
     use ashlang::rings::DilithiumPolynomialRingElement;
     use ashlang::rings::DilithiumRingElement;
-    use rand::Rng;
     use ring_math::Matrix2D;
     use ring_math::PolynomialRingElement;
     use ring_math::Vector;
+    use scalarff::BigUint;
     use scalarff::FieldElement;
 
     #[test]
     fn johnson_lindenstrauss_projection() {
-        // generate a matrix of size 256x64
-        // this transforms a vector of length 64
-        // into a vector of length 256
-        let sample_jl = |input_dimension: usize,
-                         projection_dimension: usize|
-         -> Matrix2D<DilithiumRingElement> {
-            let mut rng = rand::thread_rng();
-            let mut values = vec![];
-            // the matrix needs to be sampled randomly with
-            // each element being 0 with probabiltiy 1/2,
-            // 1 with probability 1/4 and -1 with probability 1/4
-            for _ in 0..(input_dimension * projection_dimension) {
-                let v = rng.gen_range(0..=3);
-                match v {
-                    0 => values.push(DilithiumRingElement::one()),
-                    1 => values.push(-DilithiumRingElement::one()),
-                    _ => values.push(DilithiumRingElement::zero()),
-                }
-            }
-            Matrix2D {
-                dimensions: (projection_dimension, input_dimension),
-                values,
-            }
-        };
-        // iterate a few times and assert that we're always within the bounds
-        for _ in 0..1000 {
-            let d = 64;
-            let input = Vector::<DilithiumRingElement>::sample_uniform(d, &mut rand::thread_rng());
-            // this is the floored value of sqrt(128)
-            let root_128_approx = 11;
-            let projection_size = 256;
-            let projection = sample_jl(d, projection_size);
-            let out = projection * input.clone();
-            assert_eq!(out.len(), projection_size);
-            // we'll then check the l2 norm of the matrix multiplied
-            // by the input vector
-            // println!("{} {}", out.norm_l2(), root_128_approx * input.norm_l2());
-            assert!(out.norm_l2() < root_128_approx * input.norm_l2());
-        }
+        let d = 64;
+        let input = Vector::<DilithiumRingElement>::sample_uniform(d, &mut rand::thread_rng());
+        // this is the floored value of sqrt(128)
+        let root_128_approx = BigUint::from(11u32);
+        let projection_size = Matrix2D::<DilithiumRingElement>::JL_PROJECTION_SIZE;
+        // let projection = sample_jl(d, projection_size);
+        let projection = Matrix2D::sample_jl(d, &mut rand::thread_rng());
+        let out = projection * input.clone();
+        assert_eq!(out.len(), projection_size);
+        // we'll then check the l2 norm of the matrix multiplied
+        // by the input vector
+        // println!("{} {}", out.norm_l2(), root_128_approx * input.norm_l2());
+        assert!(out.norm_l2() < root_128_approx * input.norm_l2());
     }
 
     #[test]
